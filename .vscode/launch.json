@@ -1,0 +1,34 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Generate PDF - IronPDF",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net6.0/Pdf.Cli.dll",
+            "args": [
+                "generate-iron"
+            ],
+            "cwd": "${workspaceFolder}/Pdf.Cli",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Generate PDF - iText",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net6.0/Pdf.Cli.dll",
+            "args": [
+                "generate-itext"
+            ],
+            "cwd": "${workspaceFolder}/Pdf.Cli",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
+    ]
+}

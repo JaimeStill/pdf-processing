@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Pdf.Cli/Pdf.Cli.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "generate-iron",
+            "command": "dotnet",
+            "type": "shell",
+            "problemMatcher": "$msCompile",
+            "options": {
+                "cwd": "${workspaceFolder}/Pdf.Cli/"
+            },
+            "args": [
+                "run",
+                "--",
+                "generate-iron"
+            ]
+        },
+        {
+            "label": "generate-itext",
+            "command": "dotnet",
+            "type": "shell",
+            "problemMatcher": "$msCompile",
+            "options": {
+                "cwd": "${workspaceFolder}/Pdf.Cli/"
+            },
+            "args": [
+                "run",
+                "--",
+                "generate-itext"
+            ]
+        }
+    ]
+}

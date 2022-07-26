@@ -1,0 +1,4 @@
+**/*.pdf
+!**/files/*.pdf
+bin/
+obj/
