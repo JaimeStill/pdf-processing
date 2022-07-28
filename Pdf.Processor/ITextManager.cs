@@ -17,14 +17,16 @@ internal class ITextManager : ManagerBase
     }
 
     public override void ReadFields() =>
-        PdfAcroForm.GetAcroForm(doc, false)
+        PdfAcroForm
+            .GetAcroForm(doc, false)
             .GetFormFields()
             .ToList()
             .ForEach(x => Console.WriteLine($"{x.Key} - {x.Value.GetValueAsString()} - {x.Value.GetType()}"));
 
     public override void UpdateFieldName(string old, string update)
     {
-        PdfAcroForm.GetAcroForm(doc, false)
+        PdfAcroForm
+            .GetAcroForm(doc, false)
             .GetField(old)
             .SetFieldName(update);
     }
