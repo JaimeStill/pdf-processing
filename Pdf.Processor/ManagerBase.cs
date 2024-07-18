@@ -1,16 +1,11 @@
 using Pdf.Models;
 
 namespace Pdf.Processor;
-internal abstract class ManagerBase : IManager, IDisposable
+internal abstract class ManagerBase(string src) : IManager, IDisposable
 {
-    protected readonly string filepath;
-
-    public ManagerBase(string src)
-    {
-        filepath = string.IsNullOrWhiteSpace(src)
+    protected readonly string filepath = string.IsNullOrWhiteSpace(src)
             ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "files", "ssn.pdf")
             : src;
-    }
 
     public virtual void Dispose()
     {

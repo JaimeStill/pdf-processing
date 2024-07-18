@@ -9,7 +9,7 @@ public class Person
     public string Race { get; set; }
     public string CityOfBirth { get; set; }
     public string StateOfBirth { get; set; }
-    public DateTime DateOfBirth { get; set; }
+    public DateOnly DateOfBirth { get; set; }
     public bool Citizen { get; set; }
 
     public static Person Generate() => new()
@@ -22,7 +22,7 @@ public class Person
         Race = "White",
         CityOfBirth = "Cleburne",
         StateOfBirth = "TX",
-        DateOfBirth = new DateTime(1985, 11, 5),
+        DateOfBirth = new DateOnly(1985, 11, 5),
         Citizen = true
     };
 }

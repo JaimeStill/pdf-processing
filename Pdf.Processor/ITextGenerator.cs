@@ -4,11 +4,8 @@ using iText.Kernel.Pdf;
 using Pdf.Models;
 
 namespace Pdf.Processor;
-internal class ITextGenerator : GeneratorBase
+internal class ITextGenerator(string src = "ssn.pdf", string dest = "itext-ssn.pdf") : GeneratorBase(src, dest)
 {
-    public ITextGenerator(string src = "ssn.pdf", string dest = "itext-ssn.pdf")
-        : base(src, dest) { }
-
     public override Task Generate<T>(Record<T> record) => Task.Run(() => 
     {
         using var doc = new PdfDocument(new PdfReader(src), new PdfWriter(dest));
@@ -30,7 +27,7 @@ internal class ITextGenerator : GeneratorBase
     static void SetProperties<T>(PdfDocument doc, Record<T> record)
     {
         var form = PdfAcroForm.GetAcroForm(doc, false);
-        var fields = form.GetFormFields();
+        var fields = form.GetAllFormFields();
 
         foreach (var prop in record.Properties)
         {

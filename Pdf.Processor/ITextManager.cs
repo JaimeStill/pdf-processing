@@ -19,7 +19,7 @@ internal class ITextManager : ManagerBase
     public override void ReadFields() =>
         PdfAcroForm
             .GetAcroForm(doc, false)
-            .GetFormFields()
+            .GetAllFormFields()
             .ToList()
             .ForEach(x => Console.WriteLine($"{x.Key} - {x.Value.GetValueAsString()} - {x.Value.GetType()}"));
 

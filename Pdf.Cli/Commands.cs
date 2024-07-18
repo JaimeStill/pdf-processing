@@ -13,16 +13,16 @@ public static class Commands
     static RootCommand BuildRootCommand(this List<Command> commands)
     {
         var root = new RootCommand("PDF Generator");
-        commands.ForEach(command => root.AddCommand(command));
+        commands.ForEach(root.AddCommand);
 
         return root;
     }
 
-    static List<Command> BuildCommands() => new()
-    {
+    static List<Command> BuildCommands() =>
+    [
         BuildIron(),
         BuildIText()
-    };
+    ];
 
     static Command BuildIron() =>
         BuildCommand(
@@ -38,19 +38,18 @@ public static class Commands
                 using IManager manager = PdfManager.CreateIronManager(dest);
                 manager.ReadFields();                
             }),
-            new List<Option>
-            {
+            [
                 new Option<string>(
-                    new[] { "--src", "--s" },
+                    ["--src", "--s"],
                     getDefaultValue: () => "ssn.pdf",
                     description: "PDF template source"
                 ),
                 new Option<string>(
-                    new[] { "--dest", "--d" },
+                    ["--dest", "--d"],
                     getDefaultValue: () => "iron-ssn.pdf",
                     description: "Generated PDF destination"
                 )
-            }
+            ]
         );
 
     static Command BuildIText() =>
@@ -67,19 +66,18 @@ public static class Commands
                 using IManager manager = PdfManager.CreateITextManager(dest);
                 manager.ReadFields();
             }),
-            new List<Option>
-            {
+            [
                 new Option<string>(
-                    new[] { "--src", "--s" },
+                    ["--src", "--s"],
                     getDefaultValue: () => "ssn.pdf",
                     description: "PDF template source"
                 ),
                 new Option<string>(
-                    new[] { "--dest", "--d" },
+                    ["--dest", "--d"],
                     getDefaultValue: () => "itext-ssn.pdf",
                     description: "Generated PDF destination"
                 )
-            }
+            ]
         );
 
     static Command BuildCommand(string name, string description, Func<string, string, Task> @delegate, List<Option> options)

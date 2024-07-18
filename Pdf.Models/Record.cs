@@ -1,22 +1,16 @@
 using System.Reflection;
 
 namespace Pdf.Models;
-public class Record<T>
+public class Record<T>(T data, string name = "ssn")
 {
-    public string Name { get; set; }
-    public IEnumerable<RecordProp> Properties { get; set; }
-
-    public Record(T data, string name = "ssn")
-    {
-        Name = name;
-        Properties = GenerateProps(data);
-    }
+    public string Name { get; set; } = name;
+    public IEnumerable<RecordProp> Properties { get; set; } = GenerateProps(data);
 
     static IEnumerable<RecordProp> GenerateProps(T data)
     {
         Type type = data.GetType();
         PropertyInfo[] properties = type.GetProperties();
-        List<RecordProp> props = new();
+        List<RecordProp> props = [];
 
         return properties.Select(prop => new RecordProp
         {
@@ -28,8 +22,8 @@ public class Record<T>
 
     static string GetStringValue(PropertyInfo prop, T data) => data switch
     {
-        "DateTime" => ((DateTime)prop.GetValue(data)).ToString("MM-dd-yyyy"),
-        "Boolean" => (bool)prop.GetValue(data) ? "Yes" : "No",
+        DateOnly date => date.ToString("MM-dd-yyyy"),
+        bool flag => flag ? "Yes" : "No",
         _ => prop.GetValue(data).ToString()
     };
 }

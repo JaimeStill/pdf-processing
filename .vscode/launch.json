@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net6.0/Pdf.Cli.dll",
+            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net8.0/Pdf.Cli.dll",
             "args": [
                 "generate-iron"
             ],
@@ -22,7 +22,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net6.0/Pdf.Cli.dll",
+            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net8.0/Pdf.Cli.dll",
             "args": [
                 "generate-itext"
             ],

@@ -1,13 +1,11 @@
 using IronPdf;
-using IronPdf.Forms;
+using IronSoftware;
+using IronSoftware.Forms;
 using Pdf.Models;
 
 namespace Pdf.Processor;
-internal class IronGenerator : GeneratorBase
+internal class IronGenerator(string src = "ssn.pdf", string dest = "iron-ssn.pdf") : GeneratorBase(src, dest)
 {
-    public IronGenerator(string src = "ssn.pdf", string dest = "iron-ssn.pdf")
-        : base(src, dest) { }
-
     public override Task Generate<T>(Record<T> record) => Task.Run(() =>
     {
         using var doc = PdfDocument.FromFile(src);
@@ -15,17 +13,17 @@ internal class IronGenerator : GeneratorBase
         doc.SaveAs(dest);
     });
 
-    static void SetField(PdfForm form, string field, string value) =>
-        form.GetFieldByName(field).Value = value;
+    static void SetField(FormFieldCollection form, string field, string value) =>
+        form.FindFormField(field).Value = value;
 
-    static IEnumerable<FormField> GetFormMatches(RecordProp prop, List<FormField> fields) =>
+    static IEnumerable<IFormField> GetFormMatches(RecordProp prop, FormFieldCollection fields) =>
         fields.Where(x => x.Name.Contains(prop.Map));
 
     static void SetProperties<T>(PdfDocument doc, Record<T> record)
     {
         foreach (var prop in record.Properties)
         {
-            var matches = GetFormMatches(prop, doc.Form.Fields);
+            var matches = GetFormMatches(prop, doc.Form);
 
             if (matches.Count() > 1)
                 ProcessMultiple(doc, prop, matches);
@@ -34,10 +32,10 @@ internal class IronGenerator : GeneratorBase
         }
     }
 
-    static void ProcessProperty(PdfDocument doc, RecordProp prop, FormField match) =>
+    static void ProcessProperty(PdfDocument doc, RecordProp prop, IFormField match) =>
         SetField(doc.Form, match.Name, prop.Value);
 
-    static void ProcessMultiple(PdfDocument doc, RecordProp prop, IEnumerable<FormField> matches)
+    static void ProcessMultiple(PdfDocument doc, RecordProp prop, IEnumerable<IFormField> matches)
     {
         var type = matches.First().Name.Split('.').Last();
         var isSeries = int.TryParse(type, out int index);
@@ -48,7 +46,7 @@ internal class IronGenerator : GeneratorBase
             ProcessBoolean(doc, prop, matches);
     }
 
-    static void ProcessSeries(PdfDocument doc, RecordProp prop, IEnumerable<FormField> matches, int index)
+    static void ProcessSeries(PdfDocument doc, RecordProp prop, IEnumerable<IFormField> matches, int index)
     {
         foreach (var m in matches.OrderBy(x => x.Name))
         {
@@ -57,7 +55,7 @@ internal class IronGenerator : GeneratorBase
         }
     }
 
-    static void ProcessBoolean(PdfDocument doc, RecordProp prop, IEnumerable<FormField> matches)
+    static void ProcessBoolean(PdfDocument doc, RecordProp prop, IEnumerable<IFormField> matches)
     {
         var match = matches.FirstOrDefault(m =>
             m.Name

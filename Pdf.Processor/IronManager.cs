@@ -17,15 +17,15 @@ internal class IronManager : ManagerBase
 
     public override void ReadFields() =>
         doc.Form
-           .Fields
            .ToList()
-           .ForEach(x => Console.WriteLine($"{x.Type} - {x.Name} - {x.Value} - {x.AnnotationIndex}"));
+           .ForEach(x => Console.WriteLine($"{x.Type} - {x.Name} - {x.Value} - {x.PageIndex}"));
 
     public override void UpdateFieldName(string old, string update)
     {
         doc.Form
-           .RenameField(old, update);
-        
+            .FindFormField(old)
+            .Name = update;
+
         doc.SaveAs(filepath);
     }
 }
