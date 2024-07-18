@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Pdf.Cli/Pdf.Cli.csproj",
+                "${workspaceFolder}/src/server/Pdf.Cli/Pdf.Cli.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "shell",
             "problemMatcher": "$msCompile",
             "options": {
-                "cwd": "${workspaceFolder}/Pdf.Cli/"
+                "cwd": "${workspaceFolder}/src/server/Pdf.Cli/"
             },
             "args": [
                 "run",
@@ -33,7 +33,7 @@
             "type": "shell",
             "problemMatcher": "$msCompile",
             "options": {
-                "cwd": "${workspaceFolder}/Pdf.Cli/"
+                "cwd": "${workspaceFolder}/src/server/Pdf.Cli/"
             },
             "args": [
                 "run",

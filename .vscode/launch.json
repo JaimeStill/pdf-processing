@@ -9,11 +9,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net8.0/Pdf.Cli.dll",
+            "program": "bin/Debug/net8.0/Pdf.Cli.dll",
             "args": [
                 "generate-iron"
             ],
-            "cwd": "${workspaceFolder}/Pdf.Cli",
+            "cwd": "${workspaceFolder}/src/server/Pdf.Cli",
             "console": "internalConsole",
             "stopAtEntry": false
         },
@@ -22,11 +22,11 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Pdf.Cli/bin/Debug/net8.0/Pdf.Cli.dll",
+            "program": "bin/Debug/net8.0/Pdf.Cli.dll",
             "args": [
                 "generate-itext"
             ],
-            "cwd": "${workspaceFolder}/Pdf.Cli",
+            "cwd": "${workspaceFolder}/src/server/Pdf.Cli",
             "console": "internalConsole",
             "stopAtEntry": false
         }

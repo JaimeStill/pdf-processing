@@ -16,9 +16,9 @@ To account for fields that provide several options for a single value (Gender is
 ## Scenario
 [Back to Top](#pdf-processing)
 
-Available personnel data from a [Person](./Pdf.Models/Person.cs) object should be able to be auto-filled into a [Social Security Administration Application](./Pdf.Processor/files/ssn.pdf).
+Available personnel data from a [Person](./src/server/Pdf.Models/Person.cs) object should be able to be auto-filled into a [Social Security Administration Application](./src/server/Pdf.Processor/files/ssn.pdf).
 
-A generic [Record](./Pdf.Models/Record.cs) class has been created that uses reflection to enumerate through the properties of a class and generate a collection of [RecordProp](./Pdf.Models/RecordProp.cs) objects that facilitate mapping C# object data to PDF form fields.
+A generic [Record](./src/server/Pdf.Models/Record.cs) class has been created that uses reflection to enumerate through the properties of a class and generate a collection of [RecordProp](./src/server/Pdf.Models/RecordProp.cs) objects that facilitate mapping C# object data to PDF form fields.
 
 ## Managers
 [Back to Top](#pdf-processing)
@@ -29,11 +29,11 @@ Before getting into generating PDFs, I wanted to be able to test some standard P
 * Reading details about the form fields contained in the PDF.
 * Updating the names of form fields.
 
-The required functionality has been defined by the [IManager](./Pdf.Models/IManager.cs) interface. Common features between implementations have been encapsulated in the abstract [ManagerBase](./Pdf.Processor/ManagerBase.cs) class, which implements `IManager, IDisposable`.
+The required functionality has been defined by the [IManager](./src/server/Pdf.Models/IManager.cs) interface. Common features between implementations have been encapsulated in the abstract [ManagerBase](./src/server/Pdf.Processor/ManagerBase.cs) class, which implements `IManager, IDisposable`.
 
-Concrete implementations for each library are defined in the internal classes [IronManager](./Pdf.Processor/IronManager.cs) and [ITextManager](./Pdf.Processor/ITextManager.cs).
+Concrete implementations for each library are defined in the internal classes [IronManager](./src/server/Pdf.Processor/IronManager.cs) and [ITextManager](./src/server/Pdf.Processor/ITextManager.cs).
 
-Acccess to the manager classes is exposed through the [ManagerFactory](./Pdf.Processor/ManagerFactory.cs) class.
+Acccess to the manager classes is exposed through the [ManagerFactory](./src/server/Pdf.Processor/ManagerFactory.cs) class.
 
 ## Generators
 [Back to Top](#pdf-processing)
@@ -44,16 +44,16 @@ The intent of a generator is to:
 
 * Given a `Record<T>` object, map every instance of `RecordProp.Value` to a field that matches the `RecordProp.Map` name using the conventions established at the beginning of this document.
 
-The required functionality has been defined by the [IGenerator](./Pdf.Models/IGenerator.cs) interface. Common features between implementations have been encapsulated in the abstract [GeneratorBase](./Pdf.Processor/GeneratorBase.cs) class, which implements `IGenerator`.
+The required functionality has been defined by the [IGenerator](./src/server/Pdf.Models/IGenerator.cs) interface. Common features between implementations have been encapsulated in the abstract [GeneratorBase](./src/server/Pdf.Processor/GeneratorBase.cs) class, which implements `IGenerator`.
 
-Concrete implementations for each library are defined in the internal classes [IronGenerator](./Pdf.Processor/IronGenerator.cs) and [ITextGenerator](./Pdf.Processor/ITextGenerator.cs).
+Concrete implementations for each library are defined in the internal classes [IronGenerator](./src/server/Pdf.Processor/IronGenerator.cs) and [ITextGenerator](./src/server/Pdf.Processor/ITextGenerator.cs).
 
-Access to the generator classes is exposed through the [GeneratorFactory](./Pdf.Processor/GeneratorFactory.cs) class.
+Access to the generator classes is exposed through the [GeneratorFactory](./src/server/Pdf.Processor/GeneratorFactory.cs) class.
 
 ## CLI
 [Back to Top](#pdf-processing)
 
-A [System.CommandLine](https://docs.microsoft.com/en-us/dotnet/standard/commandline/) utility has been created in [Pdf.Cli](./Pdf.Cli/Commands.cs) to test the above features.
+A [System.CommandLine](https://docs.microsoft.com/en-us/dotnet/standard/commandline/) utility has been created in [Pdf.Cli](./src/server/Pdf.Cli/Commands.cs) to test the above features.
 
 **Root Command Help**  
 
