@@ -5,10 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Generator API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "api-build",
+            "program": "bin/Debug/net8.0/Pdf.Api.dll",
+            "cwd": "${workspaceFolder}/src/server/Pdf.Api"
+        },
+        {
             "name": "Generate PDF - IronPDF",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "cli-build",
             "program": "bin/Debug/net8.0/Pdf.Cli.dll",
             "args": [
                 "generate-iron"
@@ -21,7 +29,7 @@
             "name": "Generate PDF - iText",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "cli-build",
             "program": "bin/Debug/net8.0/Pdf.Cli.dll",
             "args": [
                 "generate-itext"

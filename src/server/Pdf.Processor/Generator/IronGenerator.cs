@@ -3,10 +3,10 @@ using IronSoftware;
 using IronSoftware.Forms;
 using Pdf.Models;
 
-namespace Pdf.Processor;
-internal class IronGenerator(string src = "ssn.pdf", string dest = "iron-ssn.pdf") : GeneratorBase(src, dest)
+namespace Pdf.Processor.Generator;
+public class IronGenerator : IGenerator
 {
-    public override Task Generate<T>(Record<T> record) => Task.Run(() =>
+    public Task Generate<T>(Record<T> record, string src, string dest) => Task.Run(() =>
     {
         using var doc = PdfDocument.FromFile(src);
         SetProperties(doc, record);

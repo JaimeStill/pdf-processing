@@ -1,4 +1,4 @@
-namespace Pdf.Models;
+namespace Pdf.Processor.Manager;
 public interface IManager : IDisposable
 {
     void ReadFields();

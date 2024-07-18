@@ -1,7 +1,7 @@
 using IronPdf;
 
-namespace Pdf.Processor;
-internal class IronManager : ManagerBase
+namespace Pdf.Processor.Manager;
+public class IronManager : ManagerBase
 {
     readonly PdfDocument doc;
     public IronManager(string src) : base(src)

@@ -1,0 +1,8 @@
+.angular
+.env
+.git
+.vscode
+node_modules
+.dockerignore
+.gitignore
+README.md

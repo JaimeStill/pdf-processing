@@ -1,7 +1,7 @@
 using Pdf.Models;
 
-namespace Pdf.Processor;
-internal abstract class ManagerBase(string src) : IManager, IDisposable
+namespace Pdf.Processor.Manager;
+public abstract class ManagerBase(string src) : IManager, IDisposable
 {
     protected readonly string filepath = string.IsNullOrWhiteSpace(src)
             ? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "files", "ssn.pdf")

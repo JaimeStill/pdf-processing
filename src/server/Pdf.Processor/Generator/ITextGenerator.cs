@@ -3,10 +3,10 @@ using iText.Forms.Fields;
 using iText.Kernel.Pdf;
 using Pdf.Models;
 
-namespace Pdf.Processor;
-internal class ITextGenerator(string src = "ssn.pdf", string dest = "itext-ssn.pdf") : GeneratorBase(src, dest)
+namespace Pdf.Processor.Generator;
+public class ITextGenerator() : IGenerator
 {
-    public override Task Generate<T>(Record<T> record) => Task.Run(() => 
+    public Task Generate<T>(Record<T> record, string src, string dest) => Task.Run(() => 
     {
         using var doc = new PdfDocument(new PdfReader(src), new PdfWriter(dest));
         SetProperties(doc, record);
@@ -16,10 +16,6 @@ internal class ITextGenerator(string src = "ssn.pdf", string dest = "itext-ssn.p
     static void SetField(PdfAcroForm form, string field, string value) =>
         form.GetField(field)
             .SetValue(value);
-
-    static void SetField(PdfAcroForm form, string field, string value, bool generateAppearance) =>
-        form.GetField(field)
-            .SetValue(value, generateAppearance);
 
     static IEnumerable<KeyValuePair<string, PdfFormField>> GetFormMatches(RecordProp prop, IDictionary<string, PdfFormField> fields) =>
         fields.Where(x => x.Key.Contains(prop.Map));
@@ -74,6 +70,6 @@ internal class ITextGenerator(string src = "ssn.pdf", string dest = "itext-ssn.p
         );
 
         if (match.Key is not null)
-            SetField(form, match.Key, "Yes", true);
+            SetField(form, match.Key, "Yes");
     }
 }

@@ -1,7 +1,8 @@
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
 using Pdf.Models;
-using Pdf.Processor;
+using Pdf.Processor.Generator;
+using Pdf.Processor.Manager;
 
 namespace Pdf.Cli;
 public static class Commands
@@ -28,20 +29,14 @@ public static class Commands
         BuildCommand(
             "generate-iron",
             "Generate a PDF using IronPdf",
-            new Func<string, string, Task>(async (src, dest) =>
-            {
-                IGenerator generator = PdfGenerator.CreateIronGenerator(src, dest);
-                Person person = Person.Generate();
-                Record<Person> record = new(person);
-                await generator.Generate(record);
-
-                using IManager manager = PdfManager.CreateIronManager(dest);
-                manager.ReadFields();                
-            }),
             [
                 new Option<string>(
                     ["--src", "--s"],
-                    getDefaultValue: () => "ssn.pdf",
+                    getDefaultValue: () => Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "files",
+                        "ssn.pdf"
+                    ),
                     description: "PDF template source"
                 ),
                 new Option<string>(
@@ -49,27 +44,31 @@ public static class Commands
                     getDefaultValue: () => "iron-ssn.pdf",
                     description: "Generated PDF destination"
                 )
-            ]
+            ],
+            new Func<string, string, Task>(async (src, dest) =>
+            {
+                IronGenerator generator = new();
+                Person person = Person.Generate();
+                Record<Person> record = new(person);
+                await generator.Generate(record, src, dest);
+
+                using IronManager manager = new(dest);
+                manager.ReadFields();                
+            })
         );
 
     static Command BuildIText() =>
         BuildCommand(
             "generate-itext",
             "Generate a PDF using iText",
-            new Func<string, string, Task>(async (src, dest) =>
-            {
-                IGenerator generator = PdfGenerator.CreateITextGenerator(src, dest);
-                Person person = Person.Generate();
-                Record<Person> record = new(person);
-                await generator.Generate(record);
-
-                using IManager manager = PdfManager.CreateITextManager(dest);
-                manager.ReadFields();
-            }),
             [
                 new Option<string>(
                     ["--src", "--s"],
-                    getDefaultValue: () => "ssn.pdf",
+                    getDefaultValue: () => Path.Combine(
+                        AppDomain.CurrentDomain.BaseDirectory,
+                        "files",
+                        "ssn.pdf"
+                    ),
                     description: "PDF template source"
                 ),
                 new Option<string>(
@@ -77,10 +76,20 @@ public static class Commands
                     getDefaultValue: () => "itext-ssn.pdf",
                     description: "Generated PDF destination"
                 )
-            ]
+            ],
+            new Func<string, string, Task>(async (src, dest) =>
+            {
+                ITextGenerator generator = new();
+                Person person = Person.Generate();
+                Record<Person> record = new(person);
+                await generator.Generate(record, src, dest);
+
+                using ITextManager manager = new(dest);
+                manager.ReadFields();
+            })
         );
 
-    static Command BuildCommand(string name, string description, Func<string, string, Task> @delegate, List<Option> options)
+    static Command BuildCommand(string name, string description, List<Option> options, Func<string, string, Task> @delegate)
     {
         var command = new Command(name, description)
         {

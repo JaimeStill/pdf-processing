@@ -1,8 +1,8 @@
 using iText.Forms;
 using iText.Kernel.Pdf;
 
-namespace Pdf.Processor;
-internal class ITextManager : ManagerBase
+namespace Pdf.Processor.Manager;
+public class ITextManager : ManagerBase
 {
     readonly PdfDocument doc;
     public ITextManager(string src) : base(src)
