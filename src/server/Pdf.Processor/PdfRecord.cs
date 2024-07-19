@@ -8,16 +8,15 @@ public class PdfRecord<T>(T data, string name = "ssn")
 
     static IEnumerable<PdfRecordProp> GenerateProps(T data)
     {
-        Type type = data.GetType();
-        PropertyInfo[] properties = type.GetProperties();
-        List<PdfRecordProp> props = [];
-
-        return properties.Select(prop => new PdfRecordProp
-        {
-            Key = prop.Name,
-            Map = $"{type.Name}.{prop.Name}",
-            Value = GetStringValue(prop, data)
-        });
+        return data
+            .GetType()
+            .GetProperties()
+            .Select(prop => new PdfRecordProp
+            {
+                Key = prop.Name,
+                Map = $"{typeof(T).Name}.{prop.Name}",
+                Value = GetStringValue(prop, data)
+            });
     }
 
     static string GetStringValue(PropertyInfo prop, T data) => data switch
