@@ -18,7 +18,7 @@ To account for fields that provide several options for a single value (Gender is
 
 Available personnel data from a [Person](./src/server/Pdf.Models/Person.cs) object should be able to be auto-filled into a [Social Security Administration Application](./src/server/Pdf.Processor/files/ssn.pdf).
 
-A generic [Record](./src/server/Pdf.Models/Record.cs) class has been created that uses reflection to enumerate through the properties of a class and generate a collection of [RecordProp](./src/server/Pdf.Models/RecordProp.cs) objects that facilitate mapping C# object data to PDF form fields.
+A generic [PdfRecord](./src/server/Pdf.Processor/PdfRecord.cs) class has been created that uses reflection to enumerate through the properties of a class and generate a collection of [PdfRecordProp](./src/server/Pdf.Processor/PdfRecordProp.cs) objects that facilitate mapping C# object data to PDF form fields.
 
 ## Managers
 [Back to Top](#pdf-processing)
@@ -40,7 +40,7 @@ The intent of a generator is to:
 
 * Initialize an instance of a PDF document from a provided source path at the provided destination path.
 
-* Given a `Record<T>` object, map every instance of `RecordProp.Value` to a field that matches the `RecordProp.Map` name using the conventions established at the beginning of this document.
+* Given a `PdfRecord<T>` object, map every instance of `PdfRecordProp.Value` to a field that matches the `PdfRecordProp.Map` name using the conventions established at the beginning of this document.
 
 The required functionality has been defined by the [IGenerator](./src/server/Pdf.Processor/Generator/IGenerator.cs) interface.
 

@@ -1,5 +1,5 @@
-namespace Pdf.Models;
-public class RecordProp
+namespace Pdf.Processor;
+public class PdfRecordProp
 {
     public string Key { get; set; }
     public string Value { get; set; }

@@ -1,6 +1,7 @@
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
 using Pdf.Models;
+using Pdf.Processor;
 using Pdf.Processor.Generator;
 using Pdf.Processor.Manager;
 
@@ -49,7 +50,7 @@ public static class Commands
             {
                 IronGenerator generator = new();
                 Person person = Person.Generate();
-                Record<Person> record = new(person);
+                PdfRecord<Person> record = new(person);
                 await generator.Generate(record, src, dest);
 
                 using IronManager manager = new(dest);
@@ -81,7 +82,7 @@ public static class Commands
             {
                 ITextGenerator generator = new();
                 Person person = Person.Generate();
-                Record<Person> record = new(person);
+                PdfRecord<Person> record = new(person);
                 await generator.Generate(record, src, dest);
 
                 using ITextManager manager = new(dest);

@@ -1,7 +1,5 @@
-using Pdf.Models;
-
 namespace Pdf.Processor.Generator;
 public interface IGenerator
 {
-    Task Generate<T>(Record<T> record, string src, string dest);
+    Task Generate<T>(PdfRecord<T> record, string src, string dest);
 }

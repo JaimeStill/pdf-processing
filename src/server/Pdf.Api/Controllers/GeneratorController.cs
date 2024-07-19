@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Pdf.Models;
+using Pdf.Processor;
 using Pdf.Processor.Generator;
 
 namespace Pdf.Api.Controllers;
@@ -16,7 +17,7 @@ public class GeneratorController(IGenerator generator) : ControllerBase
     [HttpPost("[action]")]
     public async Task<FileContentResult> GeneratePdf([FromBody] Person person)
     {
-        Record<Person> record = new(person);
+        PdfRecord<Person> record = new(person);
 
         string src = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,

@@ -1,12 +1,11 @@
 using IronPdf;
 using IronSoftware;
 using IronSoftware.Forms;
-using Pdf.Models;
 
 namespace Pdf.Processor.Generator;
 public class IronGenerator : IGenerator
 {
-    public Task Generate<T>(Record<T> record, string src, string dest) => Task.Run(() =>
+    public Task Generate<T>(PdfRecord<T> record, string src, string dest) => Task.Run(() =>
     {
         using var doc = PdfDocument.FromFile(src);
         SetProperties(doc, record);
@@ -16,10 +15,10 @@ public class IronGenerator : IGenerator
     static void SetField(FormFieldCollection form, string field, string value) =>
         form.FindFormField(field).Value = value;
 
-    static IEnumerable<IFormField> GetFormMatches(RecordProp prop, FormFieldCollection fields) =>
+    static IEnumerable<IFormField> GetFormMatches(PdfRecordProp prop, FormFieldCollection fields) =>
         fields.Where(x => x.Name.Contains(prop.Map));
 
-    static void SetProperties<T>(PdfDocument doc, Record<T> record)
+    static void SetProperties<T>(PdfDocument doc, PdfRecord<T> record)
     {
         foreach (var prop in record.Properties)
         {
@@ -32,10 +31,10 @@ public class IronGenerator : IGenerator
         }
     }
 
-    static void ProcessProperty(PdfDocument doc, RecordProp prop, IFormField match) =>
+    static void ProcessProperty(PdfDocument doc, PdfRecordProp prop, IFormField match) =>
         SetField(doc.Form, match.Name, prop.Value);
 
-    static void ProcessMultiple(PdfDocument doc, RecordProp prop, IEnumerable<IFormField> matches)
+    static void ProcessMultiple(PdfDocument doc, PdfRecordProp prop, IEnumerable<IFormField> matches)
     {
         var type = matches.First().Name.Split('.').Last();
         var isSeries = int.TryParse(type, out int index);
@@ -46,7 +45,7 @@ public class IronGenerator : IGenerator
             ProcessBoolean(doc, prop, matches);
     }
 
-    static void ProcessSeries(PdfDocument doc, RecordProp prop, IEnumerable<IFormField> matches, int index)
+    static void ProcessSeries(PdfDocument doc, PdfRecordProp prop, IEnumerable<IFormField> matches, int index)
     {
         foreach (var m in matches.OrderBy(x => x.Name))
         {
@@ -55,7 +54,7 @@ public class IronGenerator : IGenerator
         }
     }
 
-    static void ProcessBoolean(PdfDocument doc, RecordProp prop, IEnumerable<IFormField> matches)
+    static void ProcessBoolean(PdfDocument doc, PdfRecordProp prop, IEnumerable<IFormField> matches)
     {
         var match = matches.FirstOrDefault(m =>
             m.Name

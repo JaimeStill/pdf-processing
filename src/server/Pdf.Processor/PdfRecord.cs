@@ -1,18 +1,18 @@
 using System.Reflection;
 
-namespace Pdf.Models;
-public class Record<T>(T data, string name = "ssn")
+namespace Pdf.Processor;
+public class PdfRecord<T>(T data, string name = "ssn")
 {
     public string Name { get; set; } = name;
-    public IEnumerable<RecordProp> Properties { get; set; } = GenerateProps(data);
+    public IEnumerable<PdfRecordProp> Properties { get; set; } = GenerateProps(data);
 
-    static IEnumerable<RecordProp> GenerateProps(T data)
+    static IEnumerable<PdfRecordProp> GenerateProps(T data)
     {
         Type type = data.GetType();
         PropertyInfo[] properties = type.GetProperties();
-        List<RecordProp> props = [];
+        List<PdfRecordProp> props = [];
 
-        return properties.Select(prop => new RecordProp
+        return properties.Select(prop => new PdfRecordProp
         {
             Key = prop.Name,
             Map = $"{type.Name}.{prop.Name}",
