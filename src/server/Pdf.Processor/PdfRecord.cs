@@ -8,6 +8,9 @@ public class PdfRecord<T>(T data, string name = "ssn")
 
     static IEnumerable<PdfRecordProp> GenerateProps(T data)
     {
+        if (data is null)
+            return [];
+
         return data
             .GetType()
             .GetProperties()
@@ -19,10 +22,10 @@ public class PdfRecord<T>(T data, string name = "ssn")
             });
     }
 
-    static string GetStringValue(PropertyInfo prop, T data) => data switch
+    static string GetStringValue(PropertyInfo prop, T data) => prop.GetValue(data) switch
     {
         DateOnly date => date.ToString("MM-dd-yyyy"),
         bool flag => flag ? "Yes" : "No",
-        _ => prop.GetValue(data).ToString()
+        _ => prop.GetValue(data)?.ToString() ?? string.Empty
     };
 }

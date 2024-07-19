@@ -63,7 +63,7 @@ public class IronGenerator : IGenerator
                 .ToLower() == prop.Value.ToLower()
         );
 
-        if (match.Name is not null)
+        if (match?.Name is not null)
             SetField(doc.Form, match.Name, "Yes");
     }
 }
